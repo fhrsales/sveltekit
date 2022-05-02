@@ -1,0 +1,43 @@
+import adapterStatic from "@sveltejs/adapter-static";
+import path from "path";
+
+const config = {
+    kit: {
+        adapter: adapterStatic({
+            fallback: 'index.html',
+        }),
+
+        files: {
+            lib: "./src",
+            assets: 'static', // na exportação guarda os arquivos estaticos em assets
+            routes: './src/routes',
+            template: './src/app.html'
+        },
+
+        paths: { // comentar o bloco paths se estiver rodando npm run dev
+            assets: "",
+            base: "/rabiscos/agenda-estadao/teste"
+        },
+
+        trailingSlash: 'ignore',
+
+        vite: {
+            resolve: {
+                alias: {
+                    "$components": path.resolve("./src/components"),
+                    "$stores": path.resolve("./src/stores"),
+                    "$styles": path.resolve("./src/styles"),
+                    "$svg": path.resolve("./src/svg"),
+                    "$static": path.resolve("./src/static"),
+                }
+            },
+            server: {
+                fs: {
+                    allow: ['..'],
+                },
+            },
+        }
+    }
+};
+
+export default config;
